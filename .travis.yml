@@ -13,5 +13,11 @@ after_success:
   - docker build -t chbright/multi-nginx ./nginx
   - docker build -t chbright/multi-server ./server
   - docker build -t chbright/multi-worker ./worker
+
   # Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those
+  - docker push chbright/multi-client
+  - docker push chbright/multi-nginx
+  - docker push chbright/multi-server
+  - docker push chbright/multi-worker
