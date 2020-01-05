@@ -1,0 +1,17 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t chbright/react-test -f ./client/Dockerfile.dev ./client/.
+
+script:
+  - docker run -e CI=true chbright/react-test npm run test
+
+after_success:
+  - docker build -t chbright/multi-client ./client
+  - docker build -t chbright/multi-nginx ./nginx
+  - docker build -t chbright/multi-server ./server
+  - docker build -t chbright/multi-worker ./worker
+  # Log in to docker CLI
+  # Take those
